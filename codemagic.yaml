@@ -26,12 +26,17 @@ workflows:
     max_build_duration: 120
     instance_type: mac_mini_m2
     environment:
-      android_signing:
-        - taskmapperKey
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: _
         # Never push key directly without encryption
       vars:
-        PACKAGE_NAME: 'com.reactnativecli'
+        XCODE_WORKSPACE: _ # <-- Put the name of your Xcode workspace here
+        XCODE_SCHEME: _ # <-- Put the name of your Xcode scheme here
+        APP_ID: XXXXXX
       node: latest
+      xcode: latest
+      cocoapods: default
     scripts:
       - name: Install yarn dependencies
         script: |
@@ -45,6 +50,11 @@ workflows:
           pod install --repo-update
       - name: Build iOS release
         script: |
-          xcodebuild -exportArchive -archivePath ios/build/reactnativecli.xcarchive -exportPath ios/build/ -exportOptionsPlist ios/ExportOptions.plist
+          xcode-project build-ipa \
+            --workspace "$CM_BUILD_DIR/ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
     artifacts:
-      - android/app/build/outputs/**/*.aab
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
