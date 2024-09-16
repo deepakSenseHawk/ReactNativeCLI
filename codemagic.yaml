@@ -4,7 +4,8 @@ workflows:
     max_build_duration: 120
     environment:
       android_signing:
-        - keystore_reference
+        - taskmapperKey
+        # Never push key directly without encryption
       groups:
         - google_play
       vars:
