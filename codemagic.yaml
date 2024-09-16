@@ -28,7 +28,7 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: org.reactjs.native.example.ReactNativeCLI
+        bundle_identifier: org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)
       vars:
         XCODE_WORKSPACE: 'ReactNativeCLI.xcworkspace'
         XCODE_SCHEME: 'ReactNativeCLI'
