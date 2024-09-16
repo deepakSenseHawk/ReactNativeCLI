@@ -11,12 +11,40 @@ workflows:
         PACKAGE_NAME: 'com.reactnativecli'
       node: latest
     scripts:
-      - name: Install npm dependencies
+      - name: Install yarn dependencies
         script: |
           yarn install
       - name: Build Android release
         script: |
           cd android
           ./gradlew bundleRelease
+    artifacts:
+      - android/app/build/outputs/**/*.aab
+
+  react-native-ios:
+    name: React Native iOS
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      android_signing:
+        - taskmapperKey
+        # Never push key directly without encryption
+      vars:
+        PACKAGE_NAME: 'com.reactnativecli'
+      node: latest
+    scripts:
+      - name: Install yarn dependencies
+        script: |
+          yarn install
+      - name: Remove Pods and Podfile.lock
+        script: |
+          cd ios
+          rm -rf Pods Podfile.lock
+      - name: Install Pods with repo update
+        script: |
+          pod install --repo-update
+      - name: Build iOS release
+        script: |
+          xcodebuild -exportArchive -archivePath ios/build/reactnativecli.xcarchive -exportPath ios/build/ -exportOptionsPlist ios/ExportOptions.plist
     artifacts:
       - android/app/build/outputs/**/*.aab
