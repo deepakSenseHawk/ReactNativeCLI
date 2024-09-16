@@ -2,14 +2,21 @@ workflows:
   react-native-android:
     name: React Native Android
     max_build_duration: 120
+    instance_type: mac_pro
     environment:
       android_signing:
         - taskmapperKey
         # Never push key directly without encryption
-      groups:
-        - google_play
       vars:
         PACKAGE_NAME: 'com.reactnativecli'
       node: latest
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          yarn install
+      - name: Build Android release
+        script: |
+          cd android
+          ./gradlew bundleRelease
     artifacts:
       - android/app/build/outputs/**/*.apk
