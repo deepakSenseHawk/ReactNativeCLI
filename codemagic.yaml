@@ -31,9 +31,9 @@ workflows:
         bundle_identifier: _
         # Never push key directly without encryption
       vars:
-        XCODE_WORKSPACE: _ # <-- Put the name of your Xcode workspace here
-        XCODE_SCHEME: _ # <-- Put the name of your Xcode scheme here
-        APP_ID: XXXXXX
+        XCODE_WORKSPACE: 'ReactNativeCLI.xcworkspace' # <-- Put the name of your Xcode workspace here
+        XCODE_SCHEME: 'ReactNativeCLI' # <-- Put the name of your Xcode scheme here
+        # APP_ID: XXXX
       node: latest
       xcode: latest
       cocoapods: default
