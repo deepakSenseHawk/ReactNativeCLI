@@ -28,8 +28,7 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store
-        bundle_identifier: _
-        # Never push key directly without encryption
+        bundle_identifier: org.reactjs.native.example.ReactNativeCLI
       vars:
         XCODE_WORKSPACE: 'ReactNativeCLI.xcworkspace' # <-- Put the name of your Xcode workspace here
         XCODE_SCHEME: 'ReactNativeCLI' # <-- Put the name of your Xcode scheme here
